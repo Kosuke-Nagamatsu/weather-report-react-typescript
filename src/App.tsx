@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import type { FC } from 'react';
+import { WeatherItem } from './components/WeatherItem';
+import { useFetchWeather } from './hooks/useFetchWeathers';
 
-function App() {
+export const App: FC = () => {
+  const { weather, isError } = useFetchWeather();
+  const { name, main, temp, icon } = weather;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isError ? (
+        <p style={{ color: 'red' }}>エラーが発生しました</p>
+      ) : (
+        <WeatherItem name={name} main={main} temp={temp} icon={icon} />
+      )}
+    </>
   );
 }
-
-export default App;
